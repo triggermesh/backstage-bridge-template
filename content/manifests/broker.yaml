@@ -1,0 +1,6 @@
+apiVersion: eventing.knative.dev/v1
+kind: Broker
+metadata:
+  name: ${{ values.brokerName }}
+  labels:
+    bridges.triggermesh.io/id: ${{ values.name }}

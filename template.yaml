@@ -1,0 +1,133 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
+kind: Template
+metadata:
+  name: sqs-service-template
+  title: SQS to Service Bridge
+  description: Create a SQS to Service integration
+  tags:
+    - sqs
+    - integration
+    - triggermesh
+    - knative
+spec:
+  owner: user:guest
+  type: service
+
+  parameters:
+    - title: AWS SQS to Service
+      description: Send messages from an SQS queue to a service
+      required:
+        - name
+      properties:
+        name:
+          title: Name
+          type: string
+          description: Unique name of the component
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the component
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - Group
+    - title: Event Broker
+      required:
+        - brokerName
+      properties:
+        brokerName:
+          title: Name
+          type: string
+          default: default
+    - title: SQS Source
+      required:
+        - sqsName
+        - sqsArn
+        - sqsAccessKeyId
+        - sqsSecretAccessKey
+      properties:
+        sqsName:
+          title: Name
+          type: string
+          default: sqs
+        sqsArn:
+          title: ARN
+          type: string
+          ui:placeholder: arn:aws:sqs:us-east-1:123456789012:queue
+          pattern: "^arn:aws:sqs:\\w+(?:-\\w+)+:\\d{12}:\\S+$"
+          description: ARN of the SQS Queue
+        sqsAccessKeyId:
+          title: Access Key ID
+          type: string
+          ui:placeholder: AKIAIOSFODNN7EXAMPLE
+          pattern: "^((?:ASIA|AKIA|AROA|AIDA)([A-Z0-7]{16}))$"
+          description: AWS Access Key ID
+        sqsSecretAccessKey:
+          title: Secret Access Key
+          type: string
+          pattern: "([a-zA-Z0-9+/]{40})"
+          ui:widget: password
+          ui:placeholder: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+          description: AWS Secret Access Key
+    - title: Service Sink
+      required:
+        - serviceName
+        - serviceImage
+      properties:
+        serviceName:
+          title: Name
+          type: string
+          default: sockeye
+        serviceImage:
+          title: Image URL
+          type: string
+          default: "docker.io/n3wscott/sockeye:v0.7.0@sha256:e603d8494eeacce966e57f8f508e4c4f6bebc71d095e3f5a0a1abaf42c5f0e48"
+          description: Container Image URL
+    - title: Choose a location
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+  steps:
+    - id: fetch-base
+      name: Fetch Base
+      action: fetch:template
+      input:
+        url: ./content
+        values:
+          name: ${{parameters.name}}
+          brokerName: ${{parameters.brokerName}}
+          sqsName: ${{parameters.sqsName}}
+          sqsArn: ${{parameters.sqsArn}}
+          sqsAccessKeyId: ${{parameters.sqsAccessKeyId}}
+          sqsSecretAccessKey: ${{parameters.sqsSecretAccessKey}}
+          serviceName: ${{parameters.serviceName}}
+          serviceImage: ${{parameters.serviceImage}}
+    - id: publish
+      name: Publish
+      action: publish:github
+      input:
+        allowedHosts: ['github.com']
+        description: This is ${{ parameters.name }}
+        repoUrl: ${{ parameters.repoUrl }}
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}
+

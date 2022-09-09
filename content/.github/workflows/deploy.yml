@@ -1,0 +1,43 @@
+name: Deploy bridges
+
+on:
+  workflow_dispatch:
+    branches:
+    - main
+  push:
+    branches:
+    - main
+
+env:
+  AWS_DEFAULT_OUTPUT: json
+  AWS_DEFAULT_REGION: eu-west-1
+  AWS_ACCESS_KEY_ID: ${{ '${{ secrets.AWS_ACCESS_KEY_ID }}' }}
+  AWS_SECRET_ACCESS_KEY: ${{ '${{ secrets.AWS_SECRET_ACCESS_KEY }}' }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out codebase
+        uses: actions/checkout@v2
+
+      - name: Configuring AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: eu-west-1
+
+      - name: Configuring kubectl
+        uses: zachguo/setup-eks-kubectl@v1
+        with:
+          cluster: pied-piper
+          region: eu-west-1
+          namespace: bridges
+
+      - name: Installing kapp
+        uses: vmware-tanzu/carvel-setup-action@v1
+        with:
+          only: kapp
+          token: ${{ '${{ secrets.GITHUB_TOKEN }}' }}
+
+      - name: Deploying bridge
+        run: kapp deploy -y -a ${{ values.name }} -c -f manifests/

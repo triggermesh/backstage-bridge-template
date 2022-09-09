@@ -1,0 +1,13 @@
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: ${{ values.serviceName }}-trigger
+  labels:
+    bridges.triggermesh.io/id: ${{ values.name }}
+spec:
+  broker: ${{ values.brokerName }}
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: ${{ values.serviceName }}
