@@ -1,12 +1,12 @@
 name: Validate bridges
 
 on:
-  pull_request:
-    branches:
-    - main
   workflow_dispatch:
     branches:
-    - main
+    - master
+  pull_request:
+    branches:
+    - master
 
 env:
   AWS_DEFAULT_OUTPUT: json
@@ -24,13 +24,13 @@ jobs:
       - name: Configuring AWS
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: ${{ values.deployClusterRegion }}
+          aws-region: ${{ '${{ env.AWS_DEFAULT_REGION }}' }}
 
       - name: Configuring kubectl
         uses: zachguo/setup-eks-kubectl@v1
         with:
+          region: ${{ '${{ env.AWS_DEFAULT_REGION }}' }}'
           cluster: ${{ values.deployClusterName }}
-          region: ${{ values.deployClusterRegion }}
           namespace: ${{ values.deployNamespace }}
 
       - name: Installing kapp
