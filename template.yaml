@@ -32,14 +32,6 @@ spec:
           ui:options:
             allowedKinds:
               - Group
-    - title: Event Broker
-      required:
-        - brokerName
-      properties:
-        brokerName:
-          title: Name
-          type: string
-          default: default
     - title: SQS Source
       required:
         - sqsName

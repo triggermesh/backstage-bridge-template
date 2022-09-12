@@ -22,4 +22,4 @@ spec:
     ref:
       apiVersion: eventing.knative.dev/v1
       kind: Broker
-      name: ${{ values.brokerName }}
+      name: ${{ values.name }}-broker
