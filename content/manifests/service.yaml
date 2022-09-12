@@ -1,7 +1,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: ${{ values.serviceName }}
+  name: ${{ values.name }}-${{ values.serviceName }}
   labels:
     bridges.triggermesh.io/id: ${{ values.name }}
 spec:

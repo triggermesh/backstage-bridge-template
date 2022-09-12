@@ -1,7 +1,7 @@
 apiVersion: eventing.knative.dev/v1
 kind: Trigger
 metadata:
-  name: ${{ values.serviceName }}-trigger
+  name: ${{ values.name }}-${{ values.serviceName }}-trigger
   labels:
     bridges.triggermesh.io/id: ${{ values.name }}
 spec:
@@ -10,4 +10,4 @@ spec:
     ref:
       apiVersion: serving.knative.dev/v1
       kind: Service
-      name: ${{ values.serviceName }}
+      name: ${{ values.name }}-${{ values.serviceName }}

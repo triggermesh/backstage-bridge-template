@@ -1,7 +1,7 @@
 apiVersion: sources.triggermesh.io/v1alpha1
 kind: AWSSQSSource
 metadata:
-  name: ${{ values.sqsName }}
+  name: ${{ values.name }}-${{ values.sqsName }}
   labels:
     bridges.triggermesh.io/id: ${{ values.name }}
 spec:
@@ -12,11 +12,11 @@ spec:
     credentials:
       accessKeyID:
         valueFromSecret:
-          name: awscreds
+          name: ${{ values.name }}-${{ values.sqsName }}-awscreds
           key: aws_access_key_id
       secretAccessKey:
         valueFromSecret:
-          name: awscreds
+          name: ${{ values.name }}-${{ values.sqsName }}-awscreds
           key: aws_secret_access_key
   sink:
     ref:
