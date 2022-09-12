@@ -76,6 +76,21 @@ spec:
           type: string
           default: "docker.io/n3wscott/sockeye:v0.7.0@sha256:e603d8494eeacce966e57f8f508e4c4f6bebc71d095e3f5a0a1abaf42c5f0e48"
           description: Container Image URL
+    - title: Deployment Configuration
+      required:
+        - deployClusterName
+        - deployClusterRegion
+        - deployNamespace
+      properties:
+        deployClusterRegion:
+          title: Cluster Region
+          type: string
+        deployClusterName:
+          title: Cluster Name
+          type: string
+        deployNamespace:
+          title: Namespace
+          type: string
     - title: Choose a location
       required:
         - repoUrl
@@ -102,6 +117,9 @@ spec:
           sqsSecretAccessKey: ${{parameters.sqsSecretAccessKey}}
           serviceName: ${{parameters.serviceName}}
           serviceImage: ${{parameters.serviceImage}}
+          deployClusterName: ${{ parameters.deployClusterName }}
+          deployClusterRegion: ${{ parameters.deployClusterRegion }}
+          deployNamespace: ${{ parameters.deployNamespace }}
     - id: publish
       name: Publish
       action: publish:github
