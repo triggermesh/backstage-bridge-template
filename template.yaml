@@ -3,7 +3,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: sqs-service-template
-  title: SQS to Service Bridge
+  title: SQS to Service Integration
   description: Create a SQS to Service integration
   tags:
     - sqs
@@ -19,11 +19,16 @@ spec:
       description: Send messages from an SQS queue to a service
       required:
         - name
+        - owner
       properties:
         name:
           title: Name
           type: string
           description: Unique name of the component
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this website is for.
         owner:
           title: Owner
           type: string
@@ -125,6 +130,7 @@ spec:
         url: ./content
         values:
           name: ${{parameters.name}}
+          description: ${{ parameters.description }}
           brokerName: ${{parameters.brokerName}}
           sqsName: ${{parameters.sqsName}}
           sqsArn: ${{parameters.sqsArn}}
@@ -137,6 +143,8 @@ spec:
           deployNamespace: ${{ parameters.deployNamespace }}
           deployAccessKeyId: ${{parameters.deployAccessKeyId}}
           deploySecretAccessKey: ${{parameters.deploySecretAccessKey}}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          owner: ${{ parameters.owner }}
     - id: publish
       name: Publish
       action: publish:github
