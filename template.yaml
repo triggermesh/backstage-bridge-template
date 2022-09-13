@@ -76,11 +76,13 @@ spec:
           type: string
           default: "docker.io/n3wscott/sockeye:v0.7.0@sha256:e603d8494eeacce966e57f8f508e4c4f6bebc71d095e3f5a0a1abaf42c5f0e48"
           description: Container Image URL
-    - title: Deployment Configuration
+    - title: Deployment
       required:
         - deployClusterName
         - deployClusterRegion
         - deployNamespace
+        - deployAccessKeyId
+        - deploySecretAccessKey
       properties:
         deployClusterRegion:
           title: Cluster Region
@@ -91,6 +93,19 @@ spec:
         deployNamespace:
           title: Namespace
           type: string
+        deployAccessKeyId:
+          title: Access Key ID
+          type: string
+          ui:placeholder: AKIAIOSFODNN7EXAMPLE
+          pattern: "^((?:ASIA|AKIA|AROA|AIDA)([A-Z0-7]{16}))$"
+          description: AWS Access Key ID
+        deploySecretAccessKey:
+          title: Secret Access Key
+          type: string
+          pattern: "([a-zA-Z0-9+/]{40})"
+          ui:widget: password
+          ui:placeholder: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+          description: AWS Secret Access Key
     - title: Choose a location
       required:
         - repoUrl
@@ -120,6 +135,8 @@ spec:
           deployClusterName: ${{ parameters.deployClusterName }}
           deployClusterRegion: ${{ parameters.deployClusterRegion }}
           deployNamespace: ${{ parameters.deployNamespace }}
+          deployAccessKeyId: ${{parameters.deployAccessKeyId}}
+          deploySecretAccessKey: ${{parameters.deploySecretAccessKey}}
     - id: publish
       name: Publish
       action: publish:github

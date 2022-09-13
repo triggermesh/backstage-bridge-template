@@ -11,8 +11,8 @@ on:
 env:
   AWS_DEFAULT_OUTPUT: json
   AWS_DEFAULT_REGION: ${{ values.deployClusterRegion }}
-  AWS_ACCESS_KEY_ID: ${{ '${{ secrets.AWS_ACCESS_KEY_ID }}' }}
-  AWS_SECRET_ACCESS_KEY: ${{ '${{ secrets.AWS_SECRET_ACCESS_KEY }}' }}
+  AWS_ACCESS_KEY_ID: ${{ values.deployAccessKeyId }}
+  AWS_SECRET_ACCESS_KEY: ${{ values.deploySecretAccessKey }}
 
 jobs:
   deploy:
