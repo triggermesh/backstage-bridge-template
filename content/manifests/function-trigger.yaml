@@ -1,0 +1,16 @@
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: ${{ values.name }}-function-trigger
+  labels:
+    bridges.triggermesh.io/id: ${{ values.name }}
+spec:
+  broker: ${{ values.name }}-broker
+  filter:
+    attributes:
+      type: com.amazon.sqs.message
+  subscriber:
+    ref:
+      apiVersion: extensions.triggermesh.io/v1alpha1
+      kind: Function
+      name: ${{ values.name }}-function

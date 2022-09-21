@@ -1,0 +1,24 @@
+apiVersion: extensions.triggermesh.io/v1alpha1
+kind: Function
+metadata:
+  name: ${{ values.name }}-function
+  labels:
+    bridges.triggermesh.io/id: ${{ values.name }}
+spec:
+  adapterOverrides:
+  ceOverrides:
+    extensions:
+      type: io.triggermesh.${{ values.name }}-function.output
+  runtime: python
+  entrypoint: main
+  code: |
+    def main(event, context):
+      return {
+        "data" : event["Body"]
+      }
+  responseIsEvent: true
+  sink:
+    ref:
+      apiVersion: eventing.knative.dev/v1
+      kind: Broker
+      name: ${{ values.name }}-broker

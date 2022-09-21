@@ -1,13 +1,16 @@
 apiVersion: eventing.knative.dev/v1
 kind: Trigger
 metadata:
-  name: ${{ values.name }}-${{ values.serviceName }}-trigger
+  name: ${{ values.name }}-sockeye-trigger
   labels:
     bridges.triggermesh.io/id: ${{ values.name }}
 spec:
   broker: ${{ values.name }}-broker
+  filter:
+    attributes:
+      type: io.triggermesh.${{ values.name }}-function.output
   subscriber:
     ref:
       apiVersion: serving.knative.dev/v1
       kind: Service
-      name: ${{ values.name }}-${{ values.serviceName }}
+      name: ${{ values.name }}-sockeye
