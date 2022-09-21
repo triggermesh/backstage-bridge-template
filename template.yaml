@@ -67,6 +67,19 @@ spec:
           ui:widget: password
           ui:placeholder: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
           description: AWS Secret Access Key
+    - title: Function
+      required:
+        - functionCode
+      properties:
+        functionCode:
+          title: Code
+          type: string
+          ui:widget: textarea
+          default: |
+            def main(event, context):
+              return {
+                "data" : event["Body"]
+              }
     - title: Service Sink
       required:
         - serviceName
@@ -98,6 +111,7 @@ spec:
         deployNamespace:
           title: Namespace
           type: string
+          default: default
         deployAccessKeyId:
           title: Access Key ID
           type: string
@@ -136,6 +150,7 @@ spec:
           sqsArn: ${{parameters.sqsArn}}
           sqsAccessKeyId: ${{parameters.sqsAccessKeyId}}
           sqsSecretAccessKey: ${{parameters.sqsSecretAccessKey}}
+          functionCode: ${{parameters.functionCode}}
           serviceName: ${{parameters.serviceName}}
           serviceImage: ${{parameters.serviceImage}}
           deployClusterName: ${{ parameters.deployClusterName }}

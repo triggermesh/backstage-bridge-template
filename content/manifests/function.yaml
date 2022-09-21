@@ -12,10 +12,7 @@ spec:
   runtime: python
   entrypoint: main
   code: |
-    def main(event, context):
-      return {
-        "data" : event["Body"]
-      }
+    ${{ values.functionCode | indent }}
   responseIsEvent: true
   sink:
     ref:

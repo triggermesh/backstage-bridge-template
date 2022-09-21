@@ -13,4 +13,4 @@ spec:
     ref:
       apiVersion: serving.knative.dev/v1
       kind: Service
-      name: ${{ values.name }}-sockeye
+      name: ${{ values.name }}-${{ values.serviceName }}
