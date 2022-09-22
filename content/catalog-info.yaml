@@ -5,6 +5,13 @@ metadata:
   {%- if values.description %}
   description: ${{ values.description }}
   {%- endif %}
+  links:
+    - url: https://docs.triggermesh.io
+      title: TriggerMesh Docs
+      icon: book
+    - url: https://github.com/triggermesh/triggermesh/tree/main/config/samples
+      title: TriggerMesh Samples
+      icon: book
   annotations:
     github.com/project-slug: ${{ values.destination.owner + "/" + values.destination.repo }}
     grafana/tag-selector: ${{ values.destination.owner + "/" + values.destination.repo }}
