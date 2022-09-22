@@ -11,6 +11,6 @@ spec:
       type: com.amazon.sqs.message
   subscriber:
     ref:
-      apiVersion: extensions.triggermesh.io/v1alpha1
-      kind: Function
-      name: ${{ values.name }}-function
+      apiVersion: flow.triggermesh.io/v1alpha1
+      kind: Transformation
+      name: ${{ values.name }}-transformation

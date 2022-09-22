@@ -67,19 +67,33 @@ spec:
           ui:widget: password
           ui:placeholder: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
           description: AWS Secret Access Key
-    - title: Function
+    - title: Transformation
+      description: Transform data as it flows from source to target
       required:
-        - functionCode
+        - transformationCode
       properties:
-        functionCode:
+        transformationCode:
           title: Code
           type: string
           ui:widget: textarea
+          ui:rows: 18
           default: |
-            def main(event, context):
-              return {
-                "data" : event["Body"]
-              }
+            context:
+            - operation: add
+              paths:
+              - key: type
+                value: io.triggermesh.tranformation.output
+            data:
+            - operation: store
+              paths:
+              - key: $body
+                value: Body
+            - operation: delete
+              paths:
+              - key:
+            - operation: add
+              paths:
+              - value: $body
     - title: Service Sink
       required:
         - serviceName
@@ -150,7 +164,7 @@ spec:
           sqsArn: ${{parameters.sqsArn}}
           sqsAccessKeyId: ${{parameters.sqsAccessKeyId}}
           sqsSecretAccessKey: ${{parameters.sqsSecretAccessKey}}
-          functionCode: ${{parameters.functionCode}}
+          transformationCode: ${{parameters.transformationCode}}
           serviceName: ${{parameters.serviceName}}
           serviceImage: ${{parameters.serviceImage}}
           deployClusterName: ${{ parameters.deployClusterName }}

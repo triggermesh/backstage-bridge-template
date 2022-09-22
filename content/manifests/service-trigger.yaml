@@ -8,7 +8,7 @@ spec:
   broker: ${{ values.name }}-broker
   filter:
     attributes:
-      type: io.triggermesh.${{ values.name }}-function.output
+      type: io.triggermesh.tranformation.output
   subscriber:
     ref:
       apiVersion: serving.knative.dev/v1
