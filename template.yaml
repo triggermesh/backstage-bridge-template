@@ -67,7 +67,7 @@ spec:
           ui:widget: password
           ui:placeholder: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
           description: AWS Secret Access Key
-    - title: Transformation
+    - title: Transformation 2
       description: Transform data as it flows from source to target
       required:
         - transformationCode
