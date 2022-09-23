@@ -13,6 +13,7 @@ metadata:
       title: TriggerMesh Samples
       icon: book
   annotations:
+    backstage.io/techdocs-ref: dir:.
     github.com/project-slug: ${{ values.destination.owner + "/" + values.destination.repo }}
     grafana/tag-selector: ${{ values.destination.owner + "/" + values.destination.repo }}
 spec:

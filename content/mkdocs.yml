@@ -1,0 +1,8 @@
+site_name: sqs-sockeye
+site_description: Visualize transformed SQS message in the web browser
+
+nav:
+  - Introduction: index.md
+
+plugins:
+  - techdocs-core
