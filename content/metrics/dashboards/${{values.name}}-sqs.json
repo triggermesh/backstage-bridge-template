@@ -111,13 +111,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(irate(awssqssource_event_count{namespace_name=\"bridges\", name=\"$source\", response_code_class!=\"\"}[$__rate_interval])) by (response_code_class)",
+          "expr": "sum(irate(awssqssource_event_count{namespace_name=\"${{ values.deployNamespace }}\", name=\"$source\", response_code_class!=\"\"}[$__rate_interval])) by (response_code_class)",
           "interval": "",
           "legendFormat": "{{response_code_class}}",
           "refId": "A"
         },
         {
-          "expr": "sum(rate(awssqssource_event_count{namespace_name=\"bridges\", name=\"$source\", response_code_class=\"\"}[$__rate_interval]))",
+          "expr": "sum(rate(awssqssource_event_count{namespace_name=\"${{ values.deployNamespace }}\", name=\"$source\", response_code_class=\"\"}[$__rate_interval]))",
           "interval": "",
           "legendFormat": "non-HTTP errors",
           "refId": "B"
@@ -222,7 +222,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(awssqssource_message_enqueued_process_count{namespace_name=\"bridges\", name=\"$source\"} - awssqssource_message_dequeued_process_count{namespace_name=\"bridges\", name=\"$source\"}) / awssqssource_queue_capacity_process{namespace_name=\"bridges\", name=\"$source\"}",
+          "expr": "(awssqssource_message_enqueued_process_count{namespace_name=\"${{ values.deployNamespace }}\", name=\"$source\"} - awssqssource_message_dequeued_process_count{namespace_name=\"${{ values.deployNamespace }}\", name=\"$source\"}) / awssqssource_queue_capacity_process{namespace_name=\"${{ values.deployNamespace }}\", name=\"$source\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "{{pod}}",
@@ -331,7 +331,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(awssqssource_message_enqueued_delete_count{namespace_name=\"bridges\", name=\"$source\"} - awssqssource_message_dequeued_delete_count{namespace_name=\"bridges\", name=\"$source\"}) / awssqssource_queue_capacity_delete{namespace_name=\"bridges\", name=\"$source\"}",
+          "expr": "(awssqssource_message_enqueued_delete_count{namespace_name=\"${{ values.deployNamespace }}\", name=\"$source\"} - awssqssource_message_dequeued_delete_count{namespace_name=\"${{ values.deployNamespace }}\", name=\"$source\"}) / awssqssource_queue_capacity_delete{namespace_name=\"${{ values.deployNamespace }}\", name=\"$source\"}",
           "interval": "",
           "legendFormat": "{{pod}}",
           "refId": "B"
