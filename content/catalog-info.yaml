@@ -14,6 +14,8 @@ metadata:
       icon: book
   annotations:
     backstage.io/techdocs-ref: dir:.
+    backstage.io/kubernetes-id: ${{ values.name }}
+    backstage.io/kubernetes-namespace: ${{ values.deployNamespace }}
     github.com/project-slug: ${{ values.destination.owner + "/" + values.destination.repo }}
     grafana/tag-selector: ${{ values.destination.owner + "/" + values.destination.repo }}
 spec:

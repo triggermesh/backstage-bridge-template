@@ -4,6 +4,7 @@ metadata:
   name: ${{ values.name }}-function-trigger
   labels:
     bridges.triggermesh.io/id: ${{ values.name }}
+    backstage.io/kubernetes-id: ${{ values.name }}
 spec:
   broker: ${{ values.name }}-broker
   filter:

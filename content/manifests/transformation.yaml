@@ -4,6 +4,7 @@ metadata:
   name: ${{ values.name }}-transformation
   labels:
     bridges.triggermesh.io/id: ${{ values.name }}
+    backstage.io/kubernetes-id: ${{ values.name }}
 spec:
   ${{ values.transformationCode | indent(2) }}
   sink:

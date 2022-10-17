@@ -4,3 +4,4 @@ metadata:
   name: ${{ values.name }}-broker
   labels:
     bridges.triggermesh.io/id: ${{ values.name }}
+    backstage.io/kubernetes-id: ${{ values.name }}
